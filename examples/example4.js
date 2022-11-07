@@ -23,8 +23,7 @@ var tasks = [
 	{"startDate":new Date("Sun Dec 09 10:21:00 EST 2012"),"endDate":new Date("Sun Dec 09 10:51:42 EST 2012"),"taskName":"P Job","status":"SUCCEEDED"},
 	{"startDate":new Date("Sun Dec 09 11:08:42 EST 2012"),"endDate":new Date("Sun Dec 09 11:33:42 EST 2012"),"taskName":"N Job","status":"FAILED"},
 	{"startDate":new Date("Sun Dec 09 12:27:15 EST 2012"),"endDate":new Date("Sun Dec 09 12:54:56 EST 2012"),"taskName":"E Job","status":"SUCCEEDED"},
-	// {"startDate":new Date("Sat Dec 08 23:12:24 EST 2012"),"endDate":new Date("Sun Dec 09 00:26:13 EST 2013"),"taskName":"A Job","status":"KILLED"}
-];
+	{"startDate":new Date("Sat Dec 08 23:12:24 EST 2012"),"endDate":new Date("Sun Dec 09 00:26:13 EST 2012"),"taskName":"A Job","status":"KILLED"}];
 	
 var taskStatus = {
     "SUCCEEDED" : "bar",
@@ -35,10 +34,10 @@ var taskStatus = {
 
 // var taskNames = [ "D Job", "P Job", "E Job", "A Job", "N Job" ];
 var taskNames = [];
-for(let task in tasks) {
-	taskNames.push("task- " + task)
+for(let task of tasks) {
+	console.log(task)
+	taskNames.push(task.taskName)
 }
-console.log(taskNames)
 tasks.sort(function(a, b) {
     return a.endDate - b.endDate;
 });
@@ -51,8 +50,7 @@ var minDate = tasks[0].startDate;
 var format = "%H:%M";
 var timeDomainString = "1day";
 
-// var gantt = d3.gantt().taskTypes(taskNames).taskStatus(taskStatus).tickFormat(format);
-var gantt = d3.gantt().taskTypes(taskNames).tickFormat(format);
+var gantt = d3.gantt().taskTypes(taskNames).taskStatus(taskStatus).tickFormat(format);
 
 var margin = {
      top : 20,
@@ -62,7 +60,7 @@ var margin = {
 };
 gantt.margin(margin);
 
-gantt.timeDomainMode("fixed");
+gantt.timeDomainMode("fit");
 changeTimeDomain(timeDomainString);
 
 gantt(tasks);
